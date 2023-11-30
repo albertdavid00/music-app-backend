@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -33,4 +35,18 @@ public class User {
     private Integer age;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @NotNull
+    private Instant joinDateTime;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+    @OneToMany(mappedBy = "user")
+    private List<Reaction> reactions;
+    @OneToMany(mappedBy = "follower")
+    private List<UserFollow> following;
+    @OneToMany(mappedBy = "following")
+    private List<UserFollow> followers;
+
+
 }

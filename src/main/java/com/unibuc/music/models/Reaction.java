@@ -6,32 +6,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.util.List;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comments")
-public class Comment {
-
+@Table(name = "reactions")
+public class Reaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
-    private String content;
+
     @NotNull
-    private Instant creationTime;
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Enumerated(EnumType.STRING)
+    private ReactionType reactionType;
+
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
-    @OneToMany(mappedBy = "comment")
-    private List<Reaction> reactions;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "comment_id", nullable = false)
+    private Comment comment;
 }
